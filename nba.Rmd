@@ -1,0 +1,91 @@
+nba <- read.csv('C:/Users/c2071859/MAT022/Assessment/nbadata.csv')
+
+summary(nba)
+
+cl1 <- unique(nba$GAME_ID)
+
+library(tidyverse)
+
+library(ggplot2)
+
+
+length(unique(nba$HOME_TEAM))
+
+#This for Pie Chart for Home/Away wins in percentage
+
+library(dplyr)
+
+ 
+nba <- group_by(GAME_ID)
+summarize(nba, LOCATION, W)
+
+
+  
+  
+library(data.table)
+setDT(nba)[, .(UnSID=uniqueN(GAME_ID)), .(LOCATION, W)]
+
+percent_home <- (506 / 904) * 100
+
+
+percent_away <- (398 / 904) * 100
+
+
+rlang::last_trace()
+
+
+install.packages("DT")
+
+library(DT)
+
+
+
+slices <- c(56, 44)
+lbls <- c("Home", "Away")
+pie(slices, labels = lbls, main="Home & Away Wins/Losses)
+
+library(viridis)
+
+install.packages("RColorBrewer")
+library("RColorBrewer")
+
+# Pie Chart with Percentages
+slices <- c(506, 398)
+lbls <- c("Home", "Away")
+pct <- round(slices/sum(slices)*100)
+lbls <- paste(lbls, pct) 
+lbls <- paste(lbls,"%",sep="") 
+pie(slices,labels = lbls, col=brewer.pal(n = 3, name ="Set1"),
+   main="Pie Chart of Wins at Home/Away")
+   
+library(dplyr)
+
+
+
+library(data.table)
+setDT(df1)[, .(UnSID=uniqueN(HOME_TEAM)), .(W)]
+
+
+cou <- nba %>% select(GAME_ID, PTS) %>% filter(GAME_ID == "21400001" & PTS == "0")
+nobs <- nrow(cou)
+print(nobs)
+            
+
+cou1 <- nba %>% select(GAME_ID, PTS) %>% filter(distinct(nba$GAME_ID) & PTS == "0")
+nobs <- nrow(cou)
+print(nobs)
+
+library(data.table)
+#Players points table
+
+
+plyrsPoint <- nba %>% select(PLAYER_ID,PLAYER_NAME, PTS)
+
+#plyrsPoint <- nba %>% select(PLAYER_ID, PLAYER_NAME, PTS) %>% filter(PLAYER_ID[1:nrow(nba)])
+
+#plyrPts <- nba %>% select(PLAYER_ID, PLAYER_NAME, PTS) %>% filter(PLAYER_ID[1:nrow(nba)])
+
+#plyrPts <- nba %>% select(PLAYER_ID, PTS) %>% filter(PLAYER_ID[1:nrow(nba)])
+
+
+ppn <- data.frame(table(plyrsPoint$PLAYER_NAME, plyrsPoint$PTS))
