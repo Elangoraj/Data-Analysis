@@ -154,4 +154,17 @@ ggplot(q5,aes(x = Var1, y = Freq, color = Shot_Result, group = Shot_Result))+
   xlab("Minutes of the Match for this season")+
   ylab("Number of Shots")
 
+  
+#Inferential Number 1 
+attach(nba)
+
+home_away <- nba %>% select(LOCATION, PLAYER_NAME, PTS) %>% filter(SHOT_RESULT == "made")
+
+#aggregate by sum(pts) which inclueds 2 & 3 in h and away for each players
+home_away2 <- aggregate(PTS ~ ., data = home_away, FUN = sum)
+
+#anova one way test
+one.way <- aov(PTS ~ LOCATION, data = home_away2)
+summary(one.way)
+
 
