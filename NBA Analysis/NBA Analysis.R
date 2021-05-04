@@ -168,3 +168,26 @@ one.way <- aov(PTS ~ LOCATION, data = home_away2)
 summary(one.way)
 
 
+
+home_away3 <- aggregate(PTS ~ LOCATION, data = home_away, FUN = sum)
+
+
+#t test for the same hom -away players
+
+home_away2
+ 
+t.test(PTS ~ LOCATION, data = home_away2)
+
+library(dplyr)
+#anova test
+#filtering data for period 1 to 4 excluding OTs where we are getting shot numbers attempted by the players in particular periods in a game
+
+period_shotNum <- nba %>% select(PERIOD, PLAYER_NAME, DRIBBLES) %>% filter(PERIOD <= 4)
+
+
+period_shotNum2 <- aggregate(DRIBBLES ~ ., data = period_shotNum, FUN = sum) 
+
+one.way <- aov(DRIBBLES ~ PERIOD, data = period_shotNum2)
+summary(one.way)
+plot(one.way, 1)
+
