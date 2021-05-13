@@ -191,3 +191,106 @@ one.way <- aov(DRIBBLES ~ PERIOD, data = period_shotNum2)
 summary(one.way)
 plot(one.way, 1)
 
+#Null hypothesis: The period in the game doesn;t affect the number of dribbles.
+#Alternate: The period affects the number of dribbles.
+
+#For 95% confidence, the p value > 0.05 and hence we reject alternate hypothesis. 
+
+
+#when a 
+margin <- nba %>% distinct(HOME_TEAM, AWAY_TEAM, W, LOCATION, FINAL_MARGIN)
+
+attach(margin)
+
+margin2 <- margin %>% mutate(WINNING_TEAM = case_when(
+  LOCATION == 'H' && W == 'W' ~ HOME_TEAM,
+  LOCATION == 'H' && W == 'L' ~ AWAY_TEAM,
+  LOCATION == 'A' && W == 'W' ~ AWAY_TEAM,
+  LOCATION == 'A' && W == 'L' ~ HOME_TEAM
+))
+
+margin3 <- margin2 %>% select(FINAL_MARGIN, WINNING_TEAM) %>% filter(FINAL_MARGIN > 0)
+
+#we got the data for  avg final margin  each team for this seaon (both away and home matches counted)
+margin4 <- aggregate(FINAL_MARGIN ~ WINNING_TEAM, data = margin3, FUN = mean)
+
+margin4$FINAL_MARGIN = round(margin4$FINAL_MARGIN, 2)
+
+
+
+install.packages("treemap")
+
+
+library(treemap)
+
+margin4$label <- paste(margin4$WINNING_TEAM, margin4$FINAL_MARGIN, sep = "\n")
+
+p <- treemap(margin4,
+             index=c("label"),
+             vSize="FINAL_MARGIN",
+             type="index",
+             palette = "Paired",
+             bg.labels=c("white"),
+             align.labels=list(
+               c("center", "center"), 
+               c("right", "bottom")
+             )  
+)   
+
+
+#
+library(ggplot2)
+
+ggplot(nba, aes(x=SHOT_DIST, color = SHOT_RESULT, group= SHOT_RESULT)) + geom_density() + xlab("Shot Distance") + ylab("") + theme_light()
+
+
+
+
+
+gsw <- nba %>% distinct(GAME_ID, DATE, HOME_TEAM, W, FINAL_MARGIN) %>% filter(HOME_TEAM == "GSW" & W == "W" & FINAL_MARGIN > 11)
+
+gsw2 <- as.Date(gsw$DATE)
+
+qsw2$DATE <- as.Date(gsw2$DATE)
+
+as.Date(gsw$DATE, "%m/%d/%Y")
+
+ggplot(data = gsw,aes(x = DATE, y = FINAL_MARGIN))+ geom_point() + geom_line(linetype = dashed)
+
+plot(FINAL_MARGIN ~ DATE, gsw, type = "l")
+
+
+
+cle <- nba %>% distinct(GAME_ID, DATE, HOME_TEAM, W, FINAL_MARGIN) %>% filter(HOME_TEAM == "CLE" & W == "W")
+
+
+ggplot(data = cle,aes(x = DATE, y = FINAL_MARGIN))+ geom_point() + geom_line()
+
+#correct
+test <- as.POSIXlt(gsw$DATE, format = "%b %d, %Y")
+
+gsw$DATE_NEW <- sub("\\ .*", "", c(test))
+
+ggplot(data = gsw,aes(x = DATE_NEW, y = FINAL_MARGIN, group = 1))+ geom_point() + geom_line()
+
+
+mtcars
+
+attach(mtcars)
+
+m = glm(data = mtcars, gear ~ .)
+
+summary(m)
+
+
+#hypothesis  t-test :
+
+shot_prd = nba %>% select(PLAYER_NAME, PTS, PERIOD) %>% filter(nba$FGM == "1" & nba$PERIOD <= 4)
+
+shot_prd2 <- shot_prd %>% mutate(PERIOD_NEW = case_when(
+  PERIOD == 4 ~ 'FINAL_PERIOD',
+  PERIOD <= 3 ~ 'EARLY_PERIODS'
+))
+
+
+t.test(PTS ~ PERIOD_NEW, data = shot_prd2)
