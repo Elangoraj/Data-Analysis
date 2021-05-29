@@ -294,3 +294,46 @@ shot_prd2 <- shot_prd %>% mutate(PERIOD_NEW = case_when(
 
 
 t.test(PTS ~ PERIOD_NEW, data = shot_prd2)
+
+
+#null hypothesis: the successful shots does not change in final and early period & alternatve: the successful shots vary in final or early period. We are rejecting null hypothesis and that means that our "made" shots trend is changing in the final period. 
+
+
+#hypothesis: 
+
+
+shot_prd = nba %>% select(PLAYER_NAME, PTS, PERIOD) %>% filter(nba$PERIOD <= 4)
+
+shot_prd2 <- shot_prd %>% mutate(PERIOD_NEW = case_when(
+  PERIOD == 4 ~ 'FINAL_PERIOD',
+  PERIOD <= 3 ~ 'EARLY_PERIODS'
+))
+
+
+t.test(PTS ~ PERIOD_NEW, data = shot_prd2)
+
+#null hypothesis: the successful shots does not change in final and early period & alternatve: the successful shots vary in final or early period. We are rejecting null hypothesis and that means that our "made" shots trend is changing in the final period. 
+
+#correaltion
+library(corrplot)
+
+cor_df <- nba %>% select(DRIBBLES, TOUCH_TIME,	SHOT_DIST,	PTS_TYPE,	CLOSE_DEF_DIST)
+
+cor_plot <- cor(cor_df)
+
+corrplot(cor_plot, method = "circle")
+
+
+#prediticng fgm
+
+model = glm(FGM ~ DRIBBLES + TOUCH_TIME +	SHOT_DIST +	PTS_TYPE +	CLOSE_DEF_DIST, data = nba)
+summary(model)
+
+#predixting fgm grp with single var
+
+model = glm(FGM ~ DRIBBLES, data = nba)
+summary(model)
+
+
+model = lm(DRIBBLES ~ FGM + TOUCH_TIME +	SHOT_DIST, data = nba)
+summary(model)
