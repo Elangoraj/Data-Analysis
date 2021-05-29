@@ -1,1 +1,1 @@
-Data analysis of NBA data.
+Data analysis of NBA data in 2014 and 2015 seasons. This data has the detailed player shoots against each team with attributes such as closest defender, closest defender distance, dribbles, and touch time.
