@@ -337,3 +337,24 @@ summary(model)
 
 model = lm(DRIBBLES ~ FGM + TOUCH_TIME +	SHOT_DIST, data = nba)
 summary(model)
+
+
+
+
+#hypothesis shot dis affects FGM made or missed. Alternative is true as dist does affect the shot result
+
+
+bartlett.test(nba$SHOT_DIST, nba$FGM)
+
+lev<- leveneTest(PTS ~ PERIOD_NEW, data = shot_prd2)   
+summary(lev)
+
+stats <- nba %>% group_by(SHOT_RESULT) %>% summarise(mean = mean(SHOT_DIST),n = n())
+
+ggplot(nba, aes(x = SHOT_DIST)) +
+  geom_histogram(aes(color = SHOT_RESULT, fill = SHOT_RESULT), 
+                position = "identity", bins = 30, alpha = 0.4) +
+  scale_color_manual(values = c("#00AFBB", "#E7B800")) +
+  scale_fill_manual(values = c("#00AFBB", "#E7B800")) +
+  geom_vline(data = stats, aes(xintercept = mean, color = SHOT_RESULT), size = 2, linetype = "dashed")
+  
