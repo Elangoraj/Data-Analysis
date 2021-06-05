@@ -5,7 +5,7 @@ Data analysis of NBA data in 2014 and 2015 seasons. This data has the detailed p
 We compare the top 6 players with best shot accuracy within the dataset. The following is the plot showing it.
 
 <!-- ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png) -->
-![Shot Accuracy](https://github.com/Elangoraj/Data-Analysis/tree/main/NBA%20Analysis/Images/shot_accuracy.png)
+![Shot Accuracy](Images/shot_accuracy.png)
 
 We compare the top 6 players with higgest number of missess or poor shooting.
 
