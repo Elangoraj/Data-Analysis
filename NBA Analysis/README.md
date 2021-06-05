@@ -8,4 +8,5 @@ We compare the top 6 players with best shot accuracy within the dataset. The fol
 ![Shot Accuracy](Images/shot_accuracy.png)
 
 We compare the top 6 players with higgest number of missess or poor shooting.
+![Shot Accuracy](Images/shot_missed.png)
 
