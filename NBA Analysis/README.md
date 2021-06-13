@@ -10,8 +10,8 @@ We compare the top 6 players with best shot accuracy within the dataset. The fol
 We compare the top 6 players with higgest number of missess or poor shooting.
 ![Shot Accuracy](Images/shot_missed.png)
 
-It is important to analyze the number of shots being scored during every minute of the match. 
-
+It is important to analyze the number of shots being scored during every minute of the match. From the bellow plot, it is clear that during the start of every quarter of the match the shots are low and the extra minutes up to 60 have a low number of shots. On the other side, the number of shots towards the end of each quarter is high which can be due to the number of free shots awarded during the last minutes. 
+![Shot Accuracy](Images/Shots_number_every_minute.png)
 
 
 # Report Under work
