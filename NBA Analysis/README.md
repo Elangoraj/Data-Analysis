@@ -10,4 +10,8 @@ We compare the top 6 players with best shot accuracy within the dataset. The fol
 We compare the top 6 players with higgest number of missess or poor shooting.
 ![Shot Accuracy](Images/shot_missed.png)
 
+It is important to analyze the number of shots being scored during every minute of the match. 
+
+
+
 # Report Under work
